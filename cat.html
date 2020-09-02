@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body class="background">
+    <div id="app">
+        <section>
+            <div class="container">
+                <div style="text-align:center">
+                    <img class="logo" :src="menu[index].src">
+                    <h1 class="border">{{title}}</h1>
+                    <div class="menuItem" >
+                        <!-- 如果不是第一天就秀出箭頭 -->
+                        <!-- index !=0 -->
+                        <!-- v-on=click = @click -->
+                        <a v-if="index != 0" class="arrowleft" @click="changeIndex(-1)"></a>
+                        <span class="number">{{ index+1 }}</span>
+                        <span class="type">{{today.type}}</span>
+                        <a class="title" :href="today.link">{{today.title}}</a>
+                        <!-- 如果不是最後一天就秀出箭頭 -->
+                        <!-- index != this.total -1  -->
+                        <a v-if="index < this.total - 1 " class="arrowright" @click="changeIndex(1)"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js'></script>
+<script>
+    
+    let data = {
+        // src: './img/7.png',
+        title: '泰瑞家的貓咪日誌',
+        index:0,
+        menu: [
+            { type: '2020/09/02', title: '哥哥睡死', link: 'javascript:;' ,src:'./img/1.jpg'},
+            { type: '2020/09/03', title: '沆拎帶頭套', link: 'javascript:;' ,src:'./img/2.jpg' },
+            { type: '2020/09/04', title: '妹妹肚子餓', link: 'javascript:;' ,src:'./img/3.jpg'},
+            { type: '2020/09/05', title: '沆拎找東西吃', link: 'javascript:;' ,src:'./img/4.jpg'},
+            { type: '2020/09/06', title: '沆拎剛睡醒', link: 'javascript:;' ,src:'./img/5.jpg'},
+        ],
+    }
+
+
+    let vm = new Vue({
+        el:"#app",
+        data:data,
+        computed:{
+            today(){
+                return this.menu[this.index]
+            },
+            total(){
+                return this.menu.length
+            }
+        },
+        methods:{
+            changeIndex(change){
+                this.index = (this.index + change + this.total) % this.total //會循環ㄛ
+            }
+        },
+
+    })
+</script>
+</body>
+</html>
